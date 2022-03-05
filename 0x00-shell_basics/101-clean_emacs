@@ -1,2 +1,2 @@
 #!/bin/bash
-rm *~
+File 101-symbolic_link_permission chown -h vincent:staff*

@@ -1,2 +1,2 @@
 #!/bin/bash
-mkdir -p welcome/to/school
+File:102-if_only chown --from=guillaume betty hello
