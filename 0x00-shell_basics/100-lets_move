@@ -1,2 +1,2 @@
 #!/bin/bash
-File: 100-change_owner_and_goup Chown vincent:staff*
+mv [A-Z]* /tmp/u
