@@ -23,7 +23,7 @@ server {
 
         root /usr/share/nginx/html;
         index index.html index.htm;
-add_header X-Served-By 349-web-01;
+add_header X-Served-By 3495-web-01;
 
         # Make site accessible from http://localhost/
         server_name localhost;
