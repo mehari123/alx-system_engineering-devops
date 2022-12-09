@@ -1,30 +1,39 @@
 #!/usr/bin/python3
-""" Script that uses JSONPlaceholder API to get information about employee """
-import json
-import requests
-import sys
+'''
+For a given employee ID, returns information about his/her
+TODO list progress in JSON format.
+'''
 
+if __name__ == '__main__':
+    import json
+    import requests
+    import sys
 
-if __name__ == "__main__":
-    url = 'https://jsonplaceholder.typicode.com/'
+    NUMBER_OF_DONE_TASKS = 0
+    TASK_TITLE = []
+    USER_ID = sys.argv[1]
 
-    userid = sys.argv[1]
-    user = '{}users/{}'.format(url, userid)
-    res = requests.get(user)
-    json_o = res.json()
-    name = json_o.get('username')
+    user = requests.get('https://jsonplaceholder.typicode.com/users/{}'.
+                        format(USER_ID))
+    name = user.json()
+    username = name.get('username')
 
-    todos = '{}todos?userId={}'.format(url, userid)
-    res = requests.get(todos)
-    tasks = res.json()
-    l_task = []
-    for task in tasks:
-        dict_task = {"task": task.get('title'),
-                     "completed": task.get('completed'),
-                     "username": name}
-        l_task.append(dict_task)
+    req = requests.get('https://jsonplaceholder.typicode.com/todos?userId={}'.
+                       format(USER_ID))
+    todos = req.json()
 
-    d_task = {str(userid): l_task}
-    filename = '{}.json'.format(userid)
-    with open(filename, mode='w') as f:
-        json.dump(d_task, f)
+    json_dictionary = {}
+    json_list = []
+
+    for item in todos:
+        json_dictionary['task'] = item.get('title')
+        json_dictionary['completed'] = item.get('completed')
+        json_dictionary['username'] = username
+        json_list.append(json_dictionary)
+        json_dictionary = {}
+
+    json_return = {}
+    json_return[USER_ID] = json_list
+
+    with open(USER_ID + '.json', 'w') as json_file:
+        json.dump(json_return, json_file)
